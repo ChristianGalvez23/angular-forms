@@ -1,20 +1,43 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
+<div class="row justify-content-center pb-3">
+  <div class="col-sm-4">
+    <h2>Adding a New Pet</h2>
+    <form #petForm="ngForm" (ngSubmit)="addPet(); petForm.reset()">
+      <div class="form-group">
+        <label for="breed">Breed:</label>
+        <input type="text" id="breed" class="form-control" [(ngModel)]="pet.breed" name="breed" required>
+      </div>
+      <div class="form-group">
+        <label for="petName">Pet name:</label>
+        <input type="text" id="petName" class="form-control" [(ngModel)]="pet.petName" name="petName" required>
+      </div>
+      <div class="form-group">
+        <label for="color">Color:</label>
+        <input type="text" id="color" class="form-control" [(ngModel)]="pet.color" name="color">
+      </div>
+      <div class="form-group">
+        <label for="bornDate">Born date:</label>
+        <input type="date" id="bornDate" value="2017-01-05" class="form-control" [(ngModel)]="pet.bornDate" name="bornDate">
+      </div>
+      <button type="button" class="btn btn-primary" [disabled]="petForm.invalid">{{ pet.id ? 'Modify': 'Register' }}</button>
+    </form>
+  </div>
+  <div class="col-sm-3">
+    {{diagnostic()}}
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://blog.angular.io//">Angular blog</a></h2>
-  </li>
-</ul>
-
+<div class="row">
+  <div class="col-sm-12 py-2">
+    <h4>List of {{pets.length}} pets.</h4>
+  </div>
+  <div class="col-sm-3" *ngFor="let p of getPets(); let pos = index">
+    <div class="card">
+      <div class="card-block">
+        <h4 class="card-title">{{ p.breed }}</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Name: {{ p.petName }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Born: {{ p.bornDate }}</h6>
+        <p class="card-text">{{p.description}}</p>
+        <button class="card-link" (click)="modifyPet(pos)">Select</button>
+      </div>
+    </div>
+  </div>
+</div>
